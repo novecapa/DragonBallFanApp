@@ -28,3 +28,8 @@ Contributions are more than welcome! Feel free to open issues, submit pull reque
 ---
 
 Stay tuned for updates as the project evolves!
+
+
+## License
+
+This project is licensed under the [**MIT License**](https://opensource.org/licenses/MIT).
