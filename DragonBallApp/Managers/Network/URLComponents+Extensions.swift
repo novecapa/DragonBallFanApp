@@ -12,9 +12,7 @@ extension URLComponents {
         guard let queryParams else {
             return
         }
-        queryItems = queryParams
-            .compactMap {
-                key, value in
+        queryItems = queryParams.compactMap { key, value in
                 if let stringValue = value as? String,
                    !stringValue.isEmpty {
                     return URLQueryItem(name: key, value: stringValue)

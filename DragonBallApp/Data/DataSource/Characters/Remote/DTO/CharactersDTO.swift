@@ -19,7 +19,7 @@ struct ItemDTO: Codable {
     let kii: String
     let maxKi: String
     let race: String
-    let gender: GenderDTO
+    let gender: String
     let description: String
     let image: String
     let affiliation: String
@@ -28,11 +28,6 @@ struct ItemDTO: Codable {
         case id, name, maxKi, race, gender, description, image, affiliation
         case kii = "ki"
     }
-}
-
-enum GenderDTO: String, Codable {
-    case female = "Female"
-    case male = "Male"
 }
 
 // MARK: - LinksDTO
