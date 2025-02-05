@@ -13,6 +13,7 @@ final class CustomSplashViewController: UIViewController {
     private enum Constants {
         static let imageSquare: CGFloat = 240
         static let animationDuration: Double = 0.75
+        static let bottomAnchorLabel: CGFloat = 40
     }
 
     var viewModel: CustomSplashViewModel!
@@ -21,7 +22,7 @@ final class CustomSplashViewController: UIViewController {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
-//        imageView.image = UIImage(named: EnvironmentsConfig.splashImageName)
+        imageView.image = .load(.splash)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.alpha = .zero
         return imageView
@@ -61,7 +62,7 @@ final class CustomSplashViewController: UIViewController {
             imageSplash.widthAnchor.constraint(equalToConstant: Constants.imageSquare),
             imageSplash.heightAnchor.constraint(equalToConstant: Constants.imageSquare),
             labelVersion.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            self.view.bottomAnchor.constraint(equalTo: labelVersion.bottomAnchor, constant: 40)
+            self.view.bottomAnchor.constraint(equalTo: labelVersion.bottomAnchor, constant: Constants.bottomAnchorLabel)
         ])
     }
 
