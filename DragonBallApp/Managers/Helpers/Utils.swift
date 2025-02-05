@@ -10,12 +10,27 @@ import SystemConfiguration
 
 protocol UtilsProtocol {
     var existsConnection: Bool { get }
+    var appVersion: String { get }
 }
 
 final class Utils: UtilsProtocol {
 
+    enum Constants {
+        static let shortVersion = "CFBundleShortVersionString"
+        static let bundleVersion = "CFBundleVersion"
+        static let noVersion = "0.0.0"
+    }
+
     var existsConnection: Bool {
         Reachability.isConnectedToNetwork()
+    }
+
+    var appVersion: String {
+        guard let shortVersion = Bundle.main.infoDictionary?[Constants.shortVersion] as? String,
+              let bundleVersion = Bundle.main.infoDictionary?[Constants.bundleVersion] as? String else {
+            return Constants.noVersion
+        }
+        return "V. \(shortVersion) (\(bundleVersion))"
     }
 }
 
