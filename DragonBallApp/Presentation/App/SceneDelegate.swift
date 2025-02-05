@@ -19,7 +19,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
 
         let viewController: UIViewController = CustomSplashBuilder().build()
-
         window.rootViewController = viewController
         window.rootViewController?.modalPresentationStyle = .fullScreen
         window.overrideUserInterfaceStyle = .light
@@ -27,6 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         self.window = window
         setupDefaultAppearances()
+
         UIView.animate(withDuration: 0.25, animations: {
             window.makeKeyAndVisible()
         })
