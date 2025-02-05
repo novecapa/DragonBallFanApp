@@ -28,12 +28,11 @@ extension CustomSplashViewRouter: CustomSplashViewRouterProtocol {
             sceneDelegate.window?.rootViewController = mainViewControler
             sceneDelegate.window?.rootViewController?.modalPresentationStyle = .fullScreen
             sceneDelegate.window?.overrideUserInterfaceStyle = .light
-//            sceneDelegate.window?.backgroundColor = ColorConstants.backgroundColor.color
-//            homeViewController = mainViewControler
-//            UIView.animate(withDuration: Constants.timeAnimation,
-//                           animations: {
-//                sceneDelegate.window?.makeKeyAndVisible()
-//            })
+            sceneDelegate.window?.backgroundColor = .white
+            UIView.animate(withDuration: 0.25,
+                           animations: {
+                sceneDelegate.window?.makeKeyAndVisible()
+            })
         }
     }
 }

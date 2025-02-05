@@ -10,20 +10,11 @@ import Foundation
 import UIKit
 
 final class MainBuilder: MainViewBuilderProtocol {
-
 	func build() -> MainViewController {
-		let storyboard = UIStoryboard(name: MainViewController.identifier,
-                                      bundle: Bundle.main)
-		let vController = storyboard.instantiateViewController(withIdentifier: MainViewController.identifier)
-		if let viewController = vController as? MainViewController {
-			let router = MainViewRouter(viewController: viewController)
-			let viewModel = MainViewModel(router: router)
-
-			viewController.viewModel = viewModel
-
-			return viewController
-		} else {
-			return MainViewController()
-		}
+        let viewController = MainViewController()
+        let router = MainViewRouter(viewController: viewController)
+        let viewModel = MainViewModel(router: router)
+        viewController.viewModel = viewModel
+        return viewController
 	}
 }

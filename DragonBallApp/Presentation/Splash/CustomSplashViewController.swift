@@ -16,7 +16,7 @@ final class CustomSplashViewController: UIViewController {
         static let bottomAnchorLabel: CGFloat = 40
     }
 
-    var viewModel: CustomSplashViewModel!
+    var viewModel: CustomSplashViewModelProtocol!
 
     private lazy var imageSplash: UIImageView = {
         let imageView = UIImageView()
