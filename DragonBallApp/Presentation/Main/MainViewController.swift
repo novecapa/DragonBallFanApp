@@ -12,8 +12,6 @@ final class MainViewController: UITabBarController {
 
     var viewModel: MainViewModelProtocol!
 
-    // MARK: - Init
-
     init() {
         super.init(nibName: nil, bundle: Bundle(for: MainViewController.self))
     }
@@ -21,8 +19,6 @@ final class MainViewController: UITabBarController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    // MARK: LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,20 +31,21 @@ final class MainViewController: UITabBarController {
     }
 
     private func setupView() {
-        // TODO: -
-//        let splash = CustomSplashBuilder().build()
-//        let splashTab = UINavigationController(rootViewController: splash)
-//        splashTab.tabBarItem = UITabBarItem(title: nil,
-//                                            image: UIImage(systemName: "rectangle.stack.person.crop"),
-//                                            selectedImage: UIImage(systemName: "rectangle.stack.person.crop.fill"))
-//
-//        let splash2 = CustomSplashBuilder().build()
-//        let splashTab2 = UINavigationController(rootViewController: splash2)
-//        splashTab2.tabBarItem = UITabBarItem(title: nil,
-//                                             image: UIImage(systemName: "star"),
-//                                             selectedImage: UIImage(systemName: "star.fill"))
-//
-//        self.viewControllers = [splashTab, splashTab2]
+        let charactersView = CharactersViewBuilder().build()
+        let characterController = HostingController(rootView: charactersView)
+        let charactersTab = UINavigationController(rootViewController: characterController)
+        charactersTab.tabBarItem = UITabBarItem(title: nil,
+                                                image: UIImage(systemName: "rectangle.stack.person.crop"),
+                                                selectedImage: UIImage(systemName: "rectangle.stack.person.crop.fill"))
+
+        let favoritesView = FavoritesViewBuilder().build()
+        let favoritesController = HostingController(rootView: favoritesView)
+        let favoritesTab = UINavigationController(rootViewController: favoritesController)
+        favoritesTab.tabBarItem = UITabBarItem(title: nil,
+                                               image: UIImage(systemName: "star"),
+                                               selectedImage: UIImage(systemName: "star.fill"))
+
+        self.viewControllers = [charactersTab, favoritesTab]
         self.selectedIndex = 0
         self.modalPresentationStyle = .currentContext
         self.delegate = self
