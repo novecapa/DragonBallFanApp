@@ -13,7 +13,7 @@ This iOS application is built using a combination of **UIKit** and **SwiftUI**, 
 - 📌 **Main Grid View**: Displays a collection of Dragon Ball characters.
 - ⭐ **Favorites Section**: Allows users to save and access their favorite characters.
 - 🌐 **API Integration**: Fetches real-time character data from the [Dragon Ball API](https://web.dragonball-api.com).
-- 💾 **Local Persistence**: Uses SwiftData to store user-selected favorites.
+- 💾 **Local Persistence**: Uses SwiftData to store characters and favorites.
 
 ## Technologies Used
 
