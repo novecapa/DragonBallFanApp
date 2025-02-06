@@ -20,7 +20,7 @@ final class CharacterDetailViewBuilder: CharacterDetailViewBuilderProtocol {
         let local = CharactersDatabase(database: database)
         let repository = CharactersRepository(remote: remote, database: local)
         let useCase = CharactersUseCase(repository: repository)
-		let viewModel = CharacterDetailViewModel()
+        let viewModel = CharacterDetailViewModel(useCase: useCase)
         let view = CharacterDetailView(viewModel: viewModel)
 		return view
 	}

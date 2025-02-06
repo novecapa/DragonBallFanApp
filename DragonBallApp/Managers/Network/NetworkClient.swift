@@ -28,7 +28,6 @@ extension NetworkClient: NetworkClientProtocol {
             throw NetworkError.badURL
         }
         var request = URLRequest(url: url)
-
         request.httpMethod = method.rawValue.uppercased()
 
         do {

@@ -10,8 +10,14 @@ import Foundation
 
 final class CharacterDetailViewBuilderMock: CharacterDetailViewBuilderProtocol {
 	func build() -> CharacterDetailView {
-        // let useCase = CharacterDetailUseCaseMock()
-		let viewModel = CharacterDetailViewModel()
+        let urlSession = URLSessionMock(statusCode: 200)
+        let network = NetworkClient(urlSession: urlSession)
+        let remote = CharactersRemote(networkClient: network)
+        let database = SwiftDataContainer(isStoredInMemoryOnly: false)
+        let local = CharactersDatabase(database: database)
+        let repository = CharactersRepository(remote: remote, database: local)
+        let useCase = CharactersUseCase(repository: repository)
+        let viewModel = CharacterDetailViewModel(useCase: useCase)
         let view = CharacterDetailView(viewModel: viewModel)
 		return view
 	}

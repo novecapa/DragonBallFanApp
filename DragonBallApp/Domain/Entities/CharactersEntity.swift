@@ -11,10 +11,14 @@ import Foundation
 struct CharactersEntity {
     let character: [CharacterEntity]
     let links: LinksEntity
+
+    var addNewPage: Int {
+        links.next.isEmpty ? 0 : 1
+    }
 }
 
 // MARK: - CharacterEntity
-struct CharacterEntity {
+struct CharacterEntity: Hashable {
     let id: Int
     let name: String
     let kii: String

@@ -22,10 +22,10 @@ final class CharactersRemote {
 // MARK: - CharactersRemoteProtocol
 extension CharactersRemote: CharactersRemoteProtocol {
     func fetchCharacters(_ page: Int) async throws -> CharactersDTO {
-        let url = Endpoints.baseURL
+        let url = Endpoints.characters.rawValue
         let queryParams = [
             "page": page,
-            "limit": Endpoints.limit
+            "limit": 10
         ]
         return try await networkClient.call(urlString: url,
                                             method: .get,
