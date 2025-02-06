@@ -40,21 +40,3 @@ extension Font {
        Font(style.uiFont)
    }
 }
-
-enum Images {
-
-    case splash
-
-    var uiImage: UIImage? {
-        switch self {
-        case .splash:
-            return UIImage(named: "splash")
-        }
-    }
-}
-// MARK: - UIImage
-extension UIImage {
-    static func load(_ img: Images) -> UIImage? {
-        img.uiImage
-    }
-}

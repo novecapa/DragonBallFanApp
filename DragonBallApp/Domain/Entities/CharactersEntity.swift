@@ -28,4 +28,8 @@ struct CharacterEntity: Hashable {
     let description: String
     let image: String
     let affiliation: String
+
+    var imageURL: URL? {
+        URL(string: self.image)
+    }
 }
