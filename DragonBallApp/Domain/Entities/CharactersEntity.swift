@@ -32,4 +32,8 @@ struct CharacterEntity: Hashable {
     var imageURL: URL? {
         URL(string: self.image)
     }
+
+    var raceGender: String {
+        "\(race) - \(gender)"
+    }
 }

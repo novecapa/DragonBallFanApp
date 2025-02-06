@@ -33,7 +33,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private func setupDefaultAppearances() {
-        window?.tintColor = .black
+        window?.tintColor = .dbYellow
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {}
