@@ -20,6 +20,12 @@ final class SDCharacter {
     var image: String
     var affiliation: String
 
+    @Relationship(deleteRule: .cascade)
+    var originPlanet: SDOriginPlanet?
+
+    @Relationship(deleteRule: .cascade)
+    var transformations: [SDTransformation]?
+
     init(
         id: Int,
         name: String,
@@ -29,7 +35,9 @@ final class SDCharacter {
         gender: String,
         desc: String,
         image: String,
-        affiliation: String
+        affiliation: String,
+        originPlanet: SDOriginPlanet?,
+        transformations: [SDTransformation]?
     ) {
         self.id = id
         self.name = name
@@ -40,5 +48,7 @@ final class SDCharacter {
         self.desc = desc
         self.image = image
         self.affiliation = affiliation
+        self.originPlanet = originPlanet
+        self.transformations = transformations
     }
 }

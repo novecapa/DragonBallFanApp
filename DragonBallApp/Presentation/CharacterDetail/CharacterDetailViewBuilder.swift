@@ -9,18 +9,18 @@
 import Foundation
 
 protocol CharacterDetailViewBuilderProtocol {
-	func build() -> CharacterDetailView
+	func build(characterId: Int) -> CharacterDetailView
 }
 
 final class CharacterDetailViewBuilder: CharacterDetailViewBuilderProtocol {
-	func build() -> CharacterDetailView {
+	func build(characterId: Int) -> CharacterDetailView {
         let network = NetworkClient(urlSession: URLSession.shared)
         let remote = CharactersRemote(networkClient: network)
         let database = SwiftDataContainer(isStoredInMemoryOnly: false)
         let local = CharactersDatabase(database: database)
         let repository = CharactersRepository(remote: remote, database: local)
         let useCase = CharactersUseCase(repository: repository)
-        let viewModel = CharacterDetailViewModel(useCase: useCase)
+        let viewModel = CharacterDetailViewModel(characterId: characterId, useCase: useCase)
         let view = CharacterDetailView(viewModel: viewModel)
 		return view
 	}

@@ -28,6 +28,8 @@ struct CharacterEntity: Hashable {
     let description: String
     let image: String
     let affiliation: String
+    let originPlanet: OriginPlanetEntity?
+    let transformations: [TransformationEntity]?
 
     var imageURL: URL? {
         URL(string: self.image)
@@ -36,4 +38,21 @@ struct CharacterEntity: Hashable {
     var raceGender: String {
         "\(race) - \(gender)"
     }
+}
+
+// MARK: - OriginPlanetEntity
+struct OriginPlanetEntity: Hashable {
+    let id: Int
+    let name: String
+    let isDestroyed: Bool
+    let description: String
+    let image: String
+}
+
+// MARK: - TransformationEntity
+struct TransformationEntity: Hashable {
+    let id: Int
+    let name: String
+    let image: String
+    let kii: String
 }

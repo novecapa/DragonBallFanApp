@@ -23,10 +23,14 @@ struct ItemDTO: Codable {
     let description: String
     let image: String
     let affiliation: String
+    let originPlanet: OriginPlanetDTO?
+    let transformations: [TransformationDTO]?
 
     enum CodingKeys: String, CodingKey {
         case id, name, maxKi, race, gender, description, image, affiliation
         case kii = "ki"
+        case originPlanet
+        case transformations
     }
 }
 
@@ -45,4 +49,26 @@ struct MetaDTO: Codable {
     let itemsPerPage: Int
     let totalPages: Int
     let currentPage: Int
+}
+
+// MARK: - OriginPlanetDTO
+struct OriginPlanetDTO: Codable {
+    let id: Int
+    let name: String
+    let isDestroyed: Bool
+    let description: String
+    let image: String
+}
+
+// MARK: - TransformationDTO
+struct TransformationDTO: Codable {
+    let id: Int
+    let name: String
+    let image: String
+    let kii: String
+
+    enum CodingKeys: String, CodingKey {
+        case id, name, image
+        case kii = "ki"
+    }
 }

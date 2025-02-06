@@ -9,6 +9,7 @@ import Foundation
 
 protocol CharactersRemoteProtocol {
     func fetchCharacters(_ page: Int) async throws -> CharactersDTO
+    func fetchCharacter(_ id: Int) async throws -> ItemDTO
 }
 
 final class CharactersRemote {
@@ -31,5 +32,13 @@ extension CharactersRemote: CharactersRemoteProtocol {
                                             method: .get,
                                             queryParams: queryParams,
                                             of: CharactersDTO.self)
+    }
+
+    func fetchCharacter(_ id: Int) async throws -> ItemDTO {
+        let url = Endpoints.character(id).rawValue
+        return try await networkClient.call(urlString: url,
+                                            method: .get,
+                                            queryParams: nil,
+                                            of: ItemDTO.self)
     }
 }

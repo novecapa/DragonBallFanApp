@@ -10,6 +10,7 @@ import SwiftData
 
 protocol CharactersDatabaseProtocol {
     func saveCharacters(characters: [SDCharacter]) async throws
+    func getcharater(by id: Int) async throws -> SDCharacter?
     func getCharacters() async throws -> [SDCharacter]
 }
 
@@ -35,5 +36,13 @@ final class CharactersDatabase: CharactersDatabaseProtocol {
             sortBy: [SortDescriptor<SDCharacter>(\.name, order: .forward)]
         )
         return try database.container.mainContext.fetch(fetchDescription)
+    }
+
+    @MainActor
+    func getcharater(by id: Int) async throws -> SDCharacter? {
+        let fetchDescriptor = FetchDescriptor<SDCharacter>(predicate: #Predicate {
+            $0.id == id
+        }, sortBy: [SortDescriptor<SDCharacter>(\.id)])
+        return try database.container.mainContext.fetch(fetchDescriptor).first
     }
 }

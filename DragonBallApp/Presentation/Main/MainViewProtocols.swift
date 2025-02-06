@@ -6,14 +6,16 @@
 //  
 //
 
-import Foundation
+import UIKit
 
 protocol MainViewModelProtocol {
     func viewReady()
     func viewDidAppear()
+    func showCharacterDetail(for id: Int, from navigation: UINavigationController)
 }
 
 protocol MainViewRouterProtocol {
+    func showCharacterDetail(for id: Int, from navigation: UINavigationController)
 }
 
 protocol MainViewBuilderProtocol {

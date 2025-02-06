@@ -6,7 +6,7 @@
 //  
 //
 
-import Foundation
+import UIKit
 
 final class MainViewModel {
 
@@ -18,12 +18,11 @@ final class MainViewModel {
 }
 
 extension MainViewModel: MainViewModelProtocol {
+    func viewReady() {}
 
-    func viewReady() {
-        // Called when view is loaded and ready
-    }
+    func viewDidAppear() {}
 
-    func viewDidAppear() {
-
+    func showCharacterDetail(for id: Int, from navigation: UINavigationController) {
+        router.showCharacterDetail(for: id, from: navigation)
     }
 }

@@ -68,6 +68,9 @@ struct CharactersView: View {
                                     .padding(.bottom, 12)
                                     .padding(.top, 6)
                             }
+                            .onTapGesture {
+                                viewModel.navigateToDetail(character.id)
+                            }
                             .onAppear {
                                 if character == viewModel.characters.last {
                                     viewModel.fetchCaracters()
@@ -87,5 +90,5 @@ struct CharactersView: View {
 }
 
 #Preview {
-    CharactersViewBuilderMock().build()
+    CharactersViewBuilderMock().build { _ in }
 }

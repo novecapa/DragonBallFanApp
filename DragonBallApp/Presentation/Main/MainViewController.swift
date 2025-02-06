@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import UIKit
 
 final class MainViewController: UITabBarController {
@@ -25,15 +26,15 @@ final class MainViewController: UITabBarController {
         setupView()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.view.backgroundColor = .white
-    }
-
     private func setupView() {
-        let charactersView = CharactersViewBuilder().build()
+        let charactersTab = UINavigationController()
+        let charactersView = CharactersViewBuilder().build { characterId in
+            charactersTab.title = nil
+            self.viewModel.showCharacterDetail(for: characterId, from: charactersTab)
+        }
         let characterController = HostingController(rootView: charactersView)
-        let charactersTab = UINavigationController(rootViewController: characterController)
+        characterController.navigationItem.backButtonTitle = ""
+        charactersTab.viewControllers = [characterController]
         charactersTab.tabBarItem = UITabBarItem(title: nil,
                                                 image: UIImage(systemName: "rectangle.stack.person.crop"),
                                                 selectedImage: UIImage(systemName: "rectangle.stack.person.crop.fill"))

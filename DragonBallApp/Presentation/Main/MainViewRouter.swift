@@ -18,4 +18,11 @@ final class MainViewRouter {
 }
 
 extension MainViewRouter: MainViewRouterProtocol {
+    func showCharacterDetail(for id: Int, from navigation: UINavigationController) {
+        DispatchQueue.main.async {
+            let detailView = CharacterDetailViewBuilder().build(characterId: id)
+            let controller = HostingController(isTabBarHidden: true, rootView: detailView)
+            navigation.pushViewController(controller, animated: true)
+        }
+    }
 }

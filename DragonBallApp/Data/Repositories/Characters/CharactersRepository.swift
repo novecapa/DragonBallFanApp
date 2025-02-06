@@ -9,6 +9,7 @@ import Foundation
 
 protocol CharactersRepositoryProtocol {
     func fetchCharacters(_ page: Int) async throws -> CharactersEntity
+    func fetchCharacter(_ id: Int) async throws -> CharacterEntity?
 }
 
 final class CharactersRepository {
@@ -36,6 +37,16 @@ extension CharactersRepository: CharactersRepositoryProtocol {
         try await database.saveCharacters(characters: result.items.map { $0.toDatabase })
         return result.toEntity
     }
+
+    func fetchCharacter(_ id: Int) async throws -> CharacterEntity? {
+        if !utils.existsConnection {
+            let character = try await database.getcharater(by: id)
+            return character?.toEntity
+        }
+        let result = try await remote.fetchCharacter(id)
+        try await database.saveCharacters(characters: [result.toDatabase])
+        return result.toEntity
+    }
 }
 
 // MARK: - CharactersDTO
@@ -58,7 +69,9 @@ fileprivate extension ItemDTO {
             gender: self.gender,
             description: self.description,
             image: self.image,
-            affiliation: self.affiliation
+            affiliation: self.affiliation,
+            originPlanet: self.originPlanet?.toEntity,
+            transformations: self.transformations?.map { $0.toEntity }
         )
     }
 
@@ -72,7 +85,9 @@ fileprivate extension ItemDTO {
             gender: self.gender,
             desc: self.description,
             image: self.image,
-            affiliation: self.affiliation
+            affiliation: self.affiliation,
+            originPlanet: self.originPlanet?.toDatabase,
+            transformations: self.transformations?.map { $0.toDatabase }
         )
     }
 }
@@ -89,7 +104,51 @@ fileprivate extension LinksDTO {
     }
 }
 
-// MARK: - SDChatacter {
+// MARK: - OriginPlanetDTO
+fileprivate extension OriginPlanetDTO {
+    var toEntity: OriginPlanetEntity {
+        OriginPlanetEntity(
+            id: self.id,
+            name: self.name,
+            isDestroyed: self.isDestroyed,
+            description: self.description,
+            image: self.image
+        )
+    }
+
+    var toDatabase: SDOriginPlanet {
+        SDOriginPlanet(
+            id: self.id,
+            name: self.name,
+            isDestroyed: self.isDestroyed,
+            desc: self.description,
+            image: self.image
+        )
+    }
+}
+
+// MARK: - TransformationDTO
+fileprivate extension TransformationDTO {
+    var toEntity: TransformationEntity {
+        TransformationEntity(
+            id: self.id,
+            name: self.name,
+            image: self.image,
+            kii: self.kii
+        )
+    }
+
+    var toDatabase: SDTransformation {
+        SDTransformation(
+            id: self.id,
+            name: self.name,
+            image: self.image,
+            kii: self.kii
+        )
+    }
+}
+
+// MARK: - SDCharacter
 fileprivate extension SDCharacter {
     var toEntity: CharacterEntity {
         CharacterEntity(
@@ -101,7 +160,34 @@ fileprivate extension SDCharacter {
             gender: self.gender,
             description: self.desc,
             image: self.image,
-            affiliation: self.affiliation
+            affiliation: self.affiliation,
+            originPlanet: self.originPlanet?.toEntity,
+            transformations: self.transformations?.map { $0.toEntity }
+        )
+    }
+}
+
+// MARK: - SDOriginPlanet
+fileprivate extension SDOriginPlanet {
+    var toEntity: OriginPlanetEntity {
+        OriginPlanetEntity(
+            id: self.id,
+            name: self.name,
+            isDestroyed: self.isDestroyed,
+            description: self.desc,
+            image: self.image
+        )
+    }
+}
+
+// MARK: - SDOriginPlanet
+fileprivate extension SDTransformation {
+    var toEntity: TransformationEntity {
+        TransformationEntity(
+            id: self.id,
+            name: self.name,
+            image: self.image,
+            kii: self.kii
         )
     }
 }

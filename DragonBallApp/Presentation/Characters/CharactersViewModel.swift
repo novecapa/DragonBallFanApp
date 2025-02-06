@@ -17,9 +17,11 @@ final class CharactersViewModel: ObservableObject {
     private var hasNewPage = true
 
     private let useCase: CharactersUseCaseProtocol
-
-    init(useCase: CharactersUseCaseProtocol) {
+    private let onNavigation: (Int) -> Void
+    init(useCase: CharactersUseCaseProtocol,
+         onNavigation: @escaping (Int) -> Void) {
         self.useCase = useCase
+        self.onNavigation = onNavigation
     }
 }
 
@@ -68,5 +70,9 @@ extension CharactersViewModel {
                 }
             }
         }
+    }
+
+    func navigateToDetail(_ id: Int) {
+        onNavigation(id)
     }
 }

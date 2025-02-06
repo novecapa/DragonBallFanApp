@@ -9,7 +9,7 @@
 import Foundation
 
 final class CharactersViewBuilderMock: CharactersViewBuilderProtocol {
-	func build() -> CharactersView {
+	func build(onNavigation: @escaping (Int) -> Void) -> CharactersView {
         let urlSession = URLSessionMock(statusCode: 200)
         let network = NetworkClient(urlSession: urlSession)
         let remote = CharactersRemote(networkClient: network)
@@ -17,7 +17,7 @@ final class CharactersViewBuilderMock: CharactersViewBuilderProtocol {
         let local = CharactersDatabase(database: database)
         let repository = CharactersRepository(remote: remote, database: local)
         let useCase = CharactersUseCase(repository: repository)
-        let viewModel = CharactersViewModel(useCase: useCase)
+        let viewModel = CharactersViewModel(useCase: useCase, onNavigation: onNavigation)
         let view = CharactersView(viewModel: viewModel)
 		return view
 	}
