@@ -26,7 +26,6 @@ struct CharacterDetailView: View {
                                     Image.cardBackground()
                                         .resizable()
                                         .cornerRadius(6)
-                                        .padding(4)
                                 })
                             Text(character.name)
                                 .foregroundStyle(.dbYellow)
@@ -56,11 +55,43 @@ struct CharacterDetailView: View {
                                 .font(.notoSans(.bold(13)))
                                 .padding(.bottom, 12)
                                 .padding(.top, 6)
+                            if let transformations = character.transformations,
+                                !transformations.isEmpty {
+                                Text("Transformations")
+                                    .foregroundStyle(.white)
+                                    .font(.notoSans(.bold(14)))
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    LazyHStack {
+                                        ForEach(transformations, id: \.id) { transformation in
+                                            VStack {
+                                                AsyncImageLoader(url: transformation.imageURL)
+                                                    .padding(14)
+                                                    .frame(width: 100, height: 150)
+                                                    .background(content: {
+                                                        Image.cardBackground()
+                                                            .resizable()
+                                                            .cornerRadius(6)
+                                                    })
+                                                Text(transformation.name)
+                                                    .multilineTextAlignment(.center)
+                                                    .lineLimit(2)
+                                                    .foregroundStyle(.dbYellow)
+                                                    .font(.notoSans(.bold(16)))
+                                                Text(transformation.kii)
+                                                    .foregroundStyle(.white)
+                                                    .font(.notoSans(.medium(12)))
+                                            }
+                                            .frame(maxWidth: 100)
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
         }
+        .padding(12)
         .background(.dbBlack)
         .onAppear {
             viewModel.fetchCharacter()

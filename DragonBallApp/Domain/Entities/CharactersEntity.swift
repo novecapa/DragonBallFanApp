@@ -55,4 +55,8 @@ struct TransformationEntity: Hashable {
     let name: String
     let image: String
     let kii: String
+
+    var imageURL: URL? {
+        URL(string: self.image)
+    }
 }
