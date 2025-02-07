@@ -33,7 +33,7 @@ final class CharactersDatabase: CharactersDatabaseProtocol {
     func getCharacters() async throws -> [SDCharacter] {
         let fetchDescription = FetchDescriptor<SDCharacter>(
             predicate: nil,
-            sortBy: [SortDescriptor<SDCharacter>(\.name, order: .forward)]
+            sortBy: [SortDescriptor<SDCharacter>(\.id, order: .forward)]
         )
         return try database.container.mainContext.fetch(fetchDescription)
     }
