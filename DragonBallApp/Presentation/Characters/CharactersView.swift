@@ -39,6 +39,18 @@ struct CharactersView: View {
                                             .cornerRadius(6)
                                             .padding(4)
                                     })
+                                    .overlay(alignment: .topTrailing) {
+                                        Button {
+                                            viewModel.setFavorite(character)
+                                        } label: {
+                                            Image(systemName: "star")
+                                                .resizable()
+                                                .foregroundStyle(.dbYellow)
+                                                .frame(width: 20,
+                                                       height: 20)
+                                                .padding(6)
+                                        }
+                                    }
                                 Text(character.name)
                                     .foregroundStyle(.dbYellow)
                                     .font(.notoSans(.bold(16)))

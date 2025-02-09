@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-final class SwiftDataContainer: SwiftDataContainerProtocol {
+actor SwiftDataContainer: SwiftDataContainerProtocol {
 
     // MARK: - Public Property
     let container: ModelContainer

@@ -22,13 +22,11 @@ final class SDTransformation {
         id: Int,
         name: String,
         image: String,
-        kii: String,
-        character: SDCharacter? = nil
+        kii: String
     ) {
         self.id = id
         self.name = name
         self.image = image
         self.kii = kii
-        self.character = character
     }
 }

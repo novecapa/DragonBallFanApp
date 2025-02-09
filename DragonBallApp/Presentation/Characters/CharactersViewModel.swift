@@ -75,4 +75,13 @@ extension CharactersViewModel {
     func navigateToDetail(_ id: Int) {
         onNavigation(id)
     }
+
+    func isFavorite(_ character: CharacterEntity) -> Bool {
+        // TODO: --
+        false
+    }
+
+    func setFavorite(_ character: CharacterEntity) {
+        // TODO: --
+    }
 }

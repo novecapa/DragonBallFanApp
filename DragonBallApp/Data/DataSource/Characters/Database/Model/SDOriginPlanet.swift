@@ -16,22 +16,17 @@ final class SDOriginPlanet {
     var desc: String
     var image: String
 
-    @Relationship(inverse: \SDCharacter.originPlanet)
-    var characters: [SDCharacter] = []
-
     init(
         id: Int,
         name: String,
         isDestroyed: Bool,
         desc: String,
-        image: String,
-        characters: [SDCharacter] = []
+        image: String
     ) {
         self.id = id
         self.name = name
         self.isDestroyed = isDestroyed
         self.desc = desc
         self.image = image
-        self.characters = characters
     }
 }

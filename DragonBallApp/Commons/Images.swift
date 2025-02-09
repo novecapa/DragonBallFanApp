@@ -21,6 +21,15 @@ enum Images {
             return UIImage(named: "cardBackground")
         }
     }
+
+    var rawValue: String {
+        switch self {
+        case .splash:
+            return "splash"
+        case .cardBackground:
+            return "cardBackground"
+        }
+    }
 }
 // MARK: - UIImage
 extension UIImage {
@@ -31,6 +40,6 @@ extension UIImage {
 
 extension Image {
     static func cardBackground() -> Image {
-        Image("cardBackground")
+        Image(Images.cardBackground.rawValue)
     }
 }
