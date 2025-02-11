@@ -8,7 +8,6 @@
 
 import Foundation
 
-@MainActor
 final class CharactersViewBuilderMock: CharactersViewBuilderProtocol {
     func build(onNavigation: @escaping (Int) -> Void) -> CharactersView {
         let urlSession = URLSessionMock(statusCode: 200)

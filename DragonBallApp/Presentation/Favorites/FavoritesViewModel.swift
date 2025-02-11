@@ -10,12 +10,28 @@ import SwiftUI
 
 final class FavoritesViewModel: ObservableObject {
 
-    /*
-    @Published var representable: Representable = .empty
+    @Published var characters: [CharacterEntity] = [] {
+        didSet {
+            print("characters: \(characters.count)")
+        }
+    }
 
-    private let useCase: FavoritesUseCaseProtocol
-    init(useCase: FavoritesUseCaseProtocol) {
+    private let useCase: CharactersUseCaseProtocol
+    init(useCase: CharactersUseCaseProtocol) {
         self.useCase = useCase
     }
-    */
+
+    private func handleError(_ error: Error) {}
+}
+// MARK: - Public methods
+extension FavoritesViewModel {
+    func getFavorites() {
+        Task { @MainActor in
+            do {
+                characters = try await useCase.favoriteList()
+            } catch {
+                handleError(error)
+            }
+        }
+    }
 }

@@ -10,8 +10,14 @@ import Foundation
 
 final class FavoritesViewBuilderMock: FavoritesViewBuilderProtocol {
 	func build() -> FavoritesView {
-        // let useCase = FavoritesUseCaseMock()
-		let viewModel = FavoritesViewModel()
+        let urlSession = URLSessionMock(statusCode: 200)
+        let network = NetworkClient(urlSession: urlSession)
+        let remote = CharactersRemote(networkClient: network)
+        let database = SwiftDataContainer(isStoredInMemoryOnly: true)
+        let local = CharactersDatabase(database: database)
+        let repository = CharactersRepository(remote: remote, database: local)
+        let useCase = CharactersUseCase(repository: repository)
+        let viewModel = FavoritesViewModel(useCase: useCase)
         let view = FavoritesView(viewModel: viewModel)
 		return view
 	}

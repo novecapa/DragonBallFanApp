@@ -11,7 +11,8 @@ protocol CharactersRepositoryProtocol {
     func fetchCharacters(_ page: Int) async throws -> CharactersEntity
     func fetchCharacter(_ id: Int) async throws -> CharacterEntity?
     func setFavorite(_ character: CharacterEntity) async throws
-    func favoriteList() async throws -> [Int]
+    func favoriteListIds() async throws -> [Int]
+    func favoriteList() async throws -> [CharacterEntity]
 }
 
 final class CharactersRepository {
@@ -32,29 +33,21 @@ final class CharactersRepository {
 extension CharactersRepository: CharactersRepositoryProtocol {
     func fetchCharacters(_ page: Int) async throws -> CharactersEntity {
         if page == 1 && !utils.existsConnection {
-            return try await MainActor.run {
-                let result = try database.getCharacters()
-                return CharactersEntity(character: result.map { $0.toEntity }, links: .empty)
-            }
+            let result = try await database.getCharacters()
+            return CharactersEntity(character: result.map { $0.toEntity }, links: .empty)
         }
         let result = try await remote.fetchCharacters(page)
-        try await MainActor.run {
-            try database.saveCharacters(characters: result.items.map { $0.toDatabase })
-        }
+        try await database.saveCharacters(characters: result.items.map { $0.toDatabase })
         return result.toEntity
     }
 
     func fetchCharacter(_ id: Int) async throws -> CharacterEntity? {
         if !utils.existsConnection {
-            return try await MainActor.run {
-                let character = try database.getcharater(by: id)
-                return character?.toEntity
-            }
+            let character = try await database.getcharater(by: id)
+            return character?.toEntity
         }
         let result = try await remote.fetchCharacter(id)
-        try await MainActor.run {
-            try database.saveCharacters(characters: [result.toDatabase])
-        }
+        try await database.saveCharacters(characters: [result.toDatabase])
         return result.toEntity
     }
 
@@ -62,8 +55,12 @@ extension CharactersRepository: CharactersRepositoryProtocol {
         try await database.setFavorite(character.toDatabase)
     }
 
-    func favoriteList() async throws -> [Int] {
+    func favoriteListIds() async throws -> [Int] {
         try await database.favoriteList().compactMap { $0.characterId }
+    }
+
+    func favoriteList() async throws -> [CharacterEntity] {
+        try await database.favoriteListCharacter().map { $0.toEntity }
     }
 }
 
@@ -185,6 +182,9 @@ fileprivate extension SDCharacter {
     }
 }
 
+// MARK: - SDCharacterFav
+fileprivate extension SDCharacterFav {}
+
 // MARK: - SDOriginPlanet
 fileprivate extension SDOriginPlanet {
     var toEntity: OriginPlanetEntity {
@@ -209,7 +209,9 @@ fileprivate extension SDTransformation {
         )
     }
 }
-extension CharacterEntity {
+
+// MARK: - CharacterEntity
+fileprivate extension CharacterEntity {
     var toDatabase: SDCharacter {
         SDCharacter(
             id: self.id,
@@ -228,7 +230,8 @@ extension CharacterEntity {
     }
 }
 
-extension OriginPlanetEntity {
+// MARK: - OriginPlanetEntity
+fileprivate extension OriginPlanetEntity {
     var toDatabase: SDOriginPlanet {
         SDOriginPlanet(
             id: self.id,
@@ -240,7 +243,8 @@ extension OriginPlanetEntity {
     }
 }
 
-extension TransformationEntity {
+// MARK: - TransformationEntity
+fileprivate extension TransformationEntity {
     var toDatabase: SDTransformation {
         SDTransformation(
             id: self.id,

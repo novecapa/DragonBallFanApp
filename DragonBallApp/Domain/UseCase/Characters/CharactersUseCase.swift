@@ -11,7 +11,8 @@ protocol CharactersUseCaseProtocol {
     func fetchCharacters(_ page: Int) async throws -> CharactersEntity
     func fetchCharacter(_ id: Int) async throws -> CharacterEntity?
     func setFavorite(_ character: CharacterEntity) async throws
-    func favoriteList() async throws -> [Int]
+    func favoriteListIds() async throws -> [Int]
+    func favoriteList() async throws -> [CharacterEntity]
 }
 
 final class CharactersUseCase {
@@ -35,7 +36,11 @@ extension CharactersUseCase: CharactersUseCaseProtocol {
         try await repository.setFavorite(character)
     }
 
-    func favoriteList() async throws -> [Int] {
+    func favoriteListIds() async throws -> [Int] {
+        try await repository.favoriteListIds()
+    }
+
+    func favoriteList() async throws -> [CharacterEntity] {
         try await repository.favoriteList()
     }
 }

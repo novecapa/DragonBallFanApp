@@ -13,7 +13,14 @@ struct FavoritesView: View {
 	@ObservedObject var viewModel: FavoritesViewModel
 
     var body: some View {
-        Text("FavoritesView")
+        ZStack {
+            GeometryReader { _ in
+
+            }
+        }
+        .onAppear {
+            viewModel.getFavorites()
+        }
     }
 }
 

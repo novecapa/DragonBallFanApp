@@ -14,8 +14,13 @@ protocol FavoritesViewBuilderProtocol {
 
 final class FavoritesViewBuilder: FavoritesViewBuilderProtocol {
 	func build() -> FavoritesView {
-        // let useCase = FavoritesUseCase()
-		let viewModel = FavoritesViewModel()
+        let network = NetworkClient(urlSession: URLSession.shared)
+        let remote = CharactersRemote(networkClient: network)
+        let database = SwiftDataContainer(isStoredInMemoryOnly: false)
+        let local = CharactersDatabase(database: database)
+        let repository = CharactersRepository(remote: remote, database: local)
+        let useCase = CharactersUseCase(repository: repository)
+        let viewModel = FavoritesViewModel(useCase: useCase)
         let view = FavoritesView(viewModel: viewModel)
 		return view
 	}

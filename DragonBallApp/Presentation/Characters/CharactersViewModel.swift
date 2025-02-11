@@ -72,7 +72,7 @@ extension CharactersViewModel {
     private func reloadFavorites() {
         Task { @MainActor in
             do {
-                self.favorites = try await useCase.favoriteList()
+                self.favorites = try await useCase.favoriteListIds()
             } catch {
                 handleError(error)
             }

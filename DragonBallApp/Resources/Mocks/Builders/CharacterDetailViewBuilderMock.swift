@@ -8,7 +8,6 @@
 
 import Foundation
 
-@MainActor
 final class CharacterDetailViewBuilderMock: CharacterDetailViewBuilderProtocol {
 	func build(characterId: Int) -> CharacterDetailView {
         let urlSession = URLSessionMock(statusCode: 200)
