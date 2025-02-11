@@ -8,10 +8,12 @@
 
 import Foundation
 
+@MainActor
 protocol CharacterDetailViewBuilderProtocol {
 	func build(characterId: Int) -> CharacterDetailView
 }
 
+@MainActor
 final class CharacterDetailViewBuilder: CharacterDetailViewBuilderProtocol {
 	func build(characterId: Int) -> CharacterDetailView {
         let network = NetworkClient(urlSession: URLSession.shared)

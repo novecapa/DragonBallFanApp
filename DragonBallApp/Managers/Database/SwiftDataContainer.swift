@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-actor SwiftDataContainer: SwiftDataContainerProtocol {
+final class SwiftDataContainer: SwiftDataContainerProtocol {
 
     // MARK: - Public Property
     let container: ModelContainer
@@ -18,6 +18,9 @@ actor SwiftDataContainer: SwiftDataContainerProtocol {
         do {
             self.container = try ModelContainer(
                 for: SDCharacter.self,
+                SDCharacterFav.self,
+                SDOriginPlanet.self,
+                SDTransformation.self,
                 configurations: ModelConfiguration(isStoredInMemoryOnly: isStoredInMemoryOnly)
             )
         } catch {

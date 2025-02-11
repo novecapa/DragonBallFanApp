@@ -32,7 +32,7 @@ extension CharacterDetailViewModel {
     func fetchCharacter() {
         Task { @MainActor in
             do {
-                self.character = try await useCase.fetchCharacter(characterId)
+                character = try await useCase.fetchCharacter(characterId)
             } catch {
                 handleError(error)
             }

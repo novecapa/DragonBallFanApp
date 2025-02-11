@@ -14,7 +14,7 @@ final class ImageLoader {
         static let imageCacheFolder: String = "ImageCache"
     }
 
-    var image: UIImage?
+    var image: Image?
     private var imageURL: URL?
 
     private let fileManager = FileManager.default
@@ -45,7 +45,7 @@ final class ImageLoader {
             }
             self.saveImageToDisk(image: downloadedImage, url: url)
             DispatchQueue.main.async {
-                self.image = downloadedImage
+                self.image = Image(uiImage: downloadedImage)
             }
         }.resume()
     }
@@ -69,10 +69,13 @@ private extension ImageLoader {
         try? data.write(to: fileURL)
     }
 
-    func loadImageFromDisk(url: URL) -> UIImage? {
+    func loadImageFromDisk(url: URL) -> Image? {
         guard let cacheDirectory else { return nil }
         let fileURL = cacheDirectory.appendingPathComponent(url.lastPathComponent)
         guard let data = try? Data(contentsOf: fileURL) else { return nil }
-        return UIImage(data: data)
+        if let img = UIImage(data: data) {
+            return Image(uiImage: img)
+        }
+        return nil
     }
 }

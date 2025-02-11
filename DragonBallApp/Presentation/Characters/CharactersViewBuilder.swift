@@ -8,10 +8,12 @@
 
 import Foundation
 
+@MainActor
 protocol CharactersViewBuilderProtocol {
 	func build(onNavigation: @escaping (Int) -> Void) -> CharactersView
 }
 
+@MainActor
 final class CharactersViewBuilder: CharactersViewBuilderProtocol {
 	func build(onNavigation: @escaping (Int) -> Void) -> CharactersView {
         let network = NetworkClient(urlSession: URLSession.shared)

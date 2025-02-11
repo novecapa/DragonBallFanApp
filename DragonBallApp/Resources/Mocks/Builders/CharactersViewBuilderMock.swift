@@ -8,8 +8,9 @@
 
 import Foundation
 
+@MainActor
 final class CharactersViewBuilderMock: CharactersViewBuilderProtocol {
-	func build(onNavigation: @escaping (Int) -> Void) -> CharactersView {
+    func build(onNavigation: @escaping (Int) -> Void) -> CharactersView {
         let urlSession = URLSessionMock(statusCode: 200)
         let network = NetworkClient(urlSession: urlSession)
         let remote = CharactersRemote(networkClient: network)

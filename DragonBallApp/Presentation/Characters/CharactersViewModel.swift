@@ -12,6 +12,8 @@ final class CharactersViewModel: ObservableObject {
 
     @Published var showLoader: Bool = false
     @Published var characters: [CharacterEntity] = []
+    @Published var refreshId: Int = -1
+    @Published var favorites: [Int] = []
 
     private(set) var currentPage = 1
     private var hasNewPage = true
@@ -53,21 +55,26 @@ private extension CharactersViewModel {
 extension CharactersViewModel {
     func fetchCaracters() {
         guard canLoadNewPage else { return }
-        Task {
+        Task { @MainActor in
             do {
-                await MainActor.run {
-                    showLoader = true
-                }
+                showLoader = true
                 let result = try await useCase.fetchCharacters(currentPage)
-                await MainActor.run {
-                    self.populateArticles(result)
-                    self.showLoader = false
-                }
+                self.populateArticles(result)
+                self.showLoader = false
+                reloadFavorites()
             } catch {
-                await MainActor.run {
-                    showLoader = false
-                    handleError(error)
-                }
+                showLoader = false
+                handleError(error)
+            }
+        }
+    }
+
+    private func reloadFavorites() {
+        Task { @MainActor in
+            do {
+                self.favorites = try await useCase.favoriteList()
+            } catch {
+                handleError(error)
             }
         }
     }
@@ -77,11 +84,20 @@ extension CharactersViewModel {
     }
 
     func isFavorite(_ character: CharacterEntity) -> Bool {
-        // TODO: --
-        false
+        return favorites.first { characterId in
+            characterId == character.id
+        } != nil
     }
 
     func setFavorite(_ character: CharacterEntity) {
-        // TODO: --
+        Task { @MainActor in
+            do {
+                try await useCase.setFavorite(character)
+                reloadFavorites()
+                refreshId = character.id
+            } catch {
+                handleError(error)
+            }
+        }
     }
 }

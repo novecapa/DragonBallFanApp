@@ -23,7 +23,7 @@ struct AsyncImageLoader: View {
     var body: some View {
         Group {
             if let image = loader.image {
-                Image(uiImage: image)
+                image
                     .resizable()
                     .scaledToFit()
                     .transition(.opacity.animation(.easeInOut))
@@ -41,9 +41,5 @@ struct AsyncImageLoader: View {
             guard let url else { return }
             loader.loadImage(with: url)
         }
-    }
-
-    var imageLoaded: UIImage {
-        loader.image ?? UIImage()
     }
 }

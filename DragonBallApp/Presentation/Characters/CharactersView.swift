@@ -43,7 +43,9 @@ struct CharactersView: View {
                                         Button {
                                             viewModel.setFavorite(character)
                                         } label: {
-                                            Image(systemName: "star")
+                                            Image(systemName: viewModel.isFavorite(character) ?
+                                                  "star.fill" :
+                                                    "star")
                                                 .resizable()
                                                 .foregroundStyle(.dbYellow)
                                                 .frame(width: 20,
@@ -88,6 +90,7 @@ struct CharactersView: View {
                                     viewModel.fetchCaracters()
                                 }
                             }
+                            .id(character.id)
                         }
                     }
                 }
