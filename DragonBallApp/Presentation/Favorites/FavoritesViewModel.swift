@@ -28,7 +28,7 @@ extension FavoritesViewModel {
     func getFavorites() {
         Task { @MainActor in
             do {
-                characters = try await useCase.favoriteList()
+                characters = try await useCase.fetchCharacters(1).character
             } catch {
                 handleError(error)
             }

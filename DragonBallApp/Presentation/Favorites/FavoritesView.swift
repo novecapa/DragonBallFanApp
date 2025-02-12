@@ -13,12 +13,19 @@ struct FavoritesView: View {
 	@ObservedObject var viewModel: FavoritesViewModel
     let visibleCardCount: Int = 2
 
+    @State private var rotation: Int = 0
     var body: some View {
+
+        let cccCount = viewModel.characters.count == 0 ? 1 : viewModel.characters.count
+        let moveToIndex = rotation % cccCount
+        let rotatatedElements = Array(viewModel.characters[moveToIndex...]) + Array(viewModel.characters[..<moveToIndex])
+        var characters = viewModel.characters
+        
         ZStack {
-            ForEach(viewModel.characters, id: \.id) { char in
-                let index = viewModel.characters.firstIndex(of: char) ?? 0
-                let zIndex = Double(viewModel.characters.count - index)
-                LoopingStack(index: index, count: viewModel.characters.count, visibleCardsCount: visibleCardCount) {
+            ForEach(rotatatedElements, id: \.id) { char in
+                let index = rotatatedElements.firstIndex(of: char) ?? 0
+                let zIndex = Double(rotatatedElements.count - index)
+                LoopingStack(index: index, count: rotatatedElements.count, visibleCardsCount: visibleCardCount, rotation: $rotation) {
                     AsyncImageLoader(url: char.imageURL)
                         .padding(18)
                         .frame(width: 320,
@@ -44,6 +51,7 @@ struct LoopingStack<Content: View>: View {
     var index: Int
     var count: Int
     var visibleCardsCount: Int
+    @Binding var rotation: Int
 
     @State private var offset: CGFloat = .zero
     @State private var viewSize: CGSize = .zero
@@ -89,6 +97,7 @@ struct LoopingStack<Content: View>: View {
                       completionCriteria: .logicallyComplete) {
             offset = -viewSize.width
         } completion: {
+            rotation += 1
             withAnimation(.smooth(duration: 0.25, extraBounce: 0)) {
                 offset = .zero
             }
@@ -96,11 +105,6 @@ struct LoopingStack<Content: View>: View {
     }
 }
 
-extension SubviewsCollection {
-    func index(_ item: SubviewsCollection.Element) -> Int {
-        firstIndex(where: { $0.id == item.id }) ?? 0
-    }
-}
 #Preview {
     FavoritesViewBuilderMock().build()
 }
