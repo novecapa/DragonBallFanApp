@@ -18,24 +18,64 @@ struct FavoritesView: View {
 
         let cccCount = viewModel.characters.count == 0 ? 1 : viewModel.characters.count
         let moveToIndex = rotation % cccCount
-        let rotatatedElements = Array(viewModel.characters[moveToIndex...]) + Array(viewModel.characters[..<moveToIndex])
-        var characters = viewModel.characters
-        
+        let rotatatedElements = Array(
+            viewModel.characters[moveToIndex...]
+        ) + Array(
+            viewModel.characters[..<moveToIndex]
+        )
+
         ZStack {
+            Color.dbBlack
             ForEach(rotatatedElements, id: \.id) { char in
                 let index = rotatatedElements.firstIndex(of: char) ?? 0
                 let zIndex = Double(rotatatedElements.count - index)
-                LoopingStack(index: index, count: rotatatedElements.count, visibleCardsCount: visibleCardCount, rotation: $rotation) {
-                    AsyncImageLoader(url: char.imageURL)
-                        .padding(18)
-                        .frame(width: 320,
-                               height: 320 * 1.5)
-                        .background(content: {
-                            Image.cardBackground()
-                                .resizable()
-                                .cornerRadius(6)
-                                .padding(4)
-                        })
+                LoopingStack(index: index, count: rotatatedElements.count,
+                             visibleCardsCount: visibleCardCount,
+                             rotation: $rotation) {
+                    VStack(spacing: 0) {
+                        AsyncImageLoader(url: char.imageURL)
+                            .padding(18)
+                            .frame(width: 320,
+                                   height: 320 * 1.5)
+                            .background(content: {
+                                Image.cardBackground()
+                                    .resizable()
+                                    .cornerRadius(6)
+                                    .padding(4)
+                            })
+                            .cornerRadius(6)
+                        Text(char.name)
+                            .foregroundStyle(.dbYellow)
+                            .font(.notoSans(.bold(16)))
+                        Text(char.raceGender)
+                            .foregroundStyle(.white)
+                            .font(.notoSans(.medium(12)))
+                            .padding(.top, 6)
+                        HStack {
+                            Text("Base KI:")
+                                .foregroundStyle(.white)
+                                .font(.notoSans(.medium(12)))
+                            Text(char.kii)
+                                .foregroundStyle(.dbYellow)
+                                .font(.notoSans(.medium(12)))
+                        }
+                        HStack {
+                            Text("Total KI:")
+                                .foregroundStyle(.white)
+                                .font(.notoSans(.medium(12)))
+                            Text(char.maxKi)
+                                .foregroundStyle(.dbYellow)
+                                .font(.notoSans(.medium(12)))
+                        }
+                        Text(char.affiliation)
+                            .foregroundStyle(.dbYellow)
+                            .font(.notoSans(.bold(13)))
+                            .padding(.bottom, 12)
+                            .padding(.top, 6)
+                    }
+                    .border(.dbYellow, width: 6)
+                    .cornerRadius(12)
+                    .background(.dbBlack)
                 }
                 .zIndex(zIndex)
             }
@@ -60,9 +100,9 @@ struct LoopingStack<Content: View>: View {
 
     var body: some View {
 
-        let extraOffset = min(CGFloat(index) * 20, CGFloat(visibleCardsCount) * 20)
+        let extraOffset = min(CGFloat(index) * 12, CGFloat(visibleCardsCount) * 12)
         let scale = 1 - min(CGFloat(index) * 0.07, CGFloat(visibleCardsCount) * 0.07)
-        let rotationDegree: CGFloat = -30
+        let rotationDegree: CGFloat = -20
         let rotation = max(min(-offset / viewSize.width, 1), 0) * rotationDegree
 
         content
