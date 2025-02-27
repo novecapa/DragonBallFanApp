@@ -15,6 +15,7 @@ final class FavoritesViewModel: ObservableObject {
             print("characters: \(characters.count)")
         }
     }
+    @State var rotation: Int = 0
 
     private let useCase: CharactersUseCaseProtocol
     init(useCase: CharactersUseCaseProtocol) {

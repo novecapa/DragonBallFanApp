@@ -67,22 +67,21 @@ final class CustomSplashViewController: UIViewController {
     }
 
     private func setupAnimation() {
+        animateSplash(fadeIn: true, cycles: 3) { [weak self] in
+            self?.viewModel.showMainView()
+        }
+    }
+
+    private func animateSplash(fadeIn: Bool, cycles: Int, completion: @escaping () -> Void) {
+        guard cycles > 0 else {
+            completion()
+            return
+        }
+
         UIView.animate(withDuration: Constants.animationDuration, animations: { [weak self] in
-            self?.imageSplash.alpha = 1.0
+            self?.imageSplash.alpha = fadeIn ? 1.0 : 0.0
         }, completion: { [weak self] _ in
-            UIView.animate(withDuration: Constants.animationDuration, animations: {
-                self?.imageSplash.alpha = 0.0
-            }, completion: { [weak self] _ in
-                UIView.animate(withDuration: Constants.animationDuration, animations: {
-                    self?.imageSplash.alpha = 1.0
-                }, completion: { [weak self] _ in
-                    UIView.animate(withDuration: Constants.animationDuration, animations: {
-                        self?.imageSplash.alpha = 0.0
-                    }, completion: { [weak self] _ in
-                        self?.viewModel.showMainView()
-                    })
-                })
-            })
+            self?.animateSplash(fadeIn: !fadeIn, cycles: cycles - 1, completion: completion)
         })
     }
 }
