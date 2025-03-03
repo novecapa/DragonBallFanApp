@@ -1,8 +1,7 @@
 # DragonBall iOS App
 
-🚧 **Project in Development** 🚧
+![Simulator Screen Recording - iPhone 16 Pro Max - 2025-03-03 at 11 26 50](https://github.com/user-attachments/assets/5d945479-7776-4262-8334-a4c9b08bbf9b)
 
-This project is currently a work in progress. Any contributions, suggestions, or feedback are highly appreciated!
 
 ## Overview
 
