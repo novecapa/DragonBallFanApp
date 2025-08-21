@@ -50,7 +50,9 @@ final class ImageLoader {
         }.resume()
     }
 }
+
 // MARK: Image cache methods
+
 private extension ImageLoader {
     func createCacheDirectoryIfNeeded() {
         guard let cacheDirectory else { return }
