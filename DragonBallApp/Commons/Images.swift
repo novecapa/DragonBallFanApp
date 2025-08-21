@@ -31,7 +31,9 @@ enum Images {
         }
     }
 }
-// MARK: - UIImage
+
+// MARK: - UIImage & Image
+
 extension UIImage {
     static func load(_ img: Images) -> UIImage? {
         img.uiImage
