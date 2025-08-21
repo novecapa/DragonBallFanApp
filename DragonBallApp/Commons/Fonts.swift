@@ -28,13 +28,17 @@ enum Fonts {
         }
     }
 }
+
 // MARK: - UIKit Font
+
 extension UIFont {
     static func notoSans(_ style: Fonts) -> UIFont {
         style.uiFont
     }
 }
+
 // MARK: - SwiftUI Font
+
 extension Font {
    static func notoSans(_ style: Fonts) -> Font {
        Font(style.uiFont)
