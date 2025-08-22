@@ -17,14 +17,19 @@ final class FavoritesViewModel: ObservableObject {
     }
     @State var rotation: Int = 0
 
+    // MARK - Private
     private let useCase: CharactersUseCaseProtocol
+
     init(useCase: CharactersUseCaseProtocol) {
         self.useCase = useCase
     }
 
+    // TODO: - 
     private func handleError(_ error: Error) {}
 }
+
 // MARK: - Public methods
+
 extension FavoritesViewModel {
     func getFavorites() {
         Task { @MainActor in
