@@ -20,7 +20,9 @@ final class CharactersRemote {
         self.networkClient = networkClient
     }
 }
+
 // MARK: - CharactersRemoteProtocol
+
 extension CharactersRemote: CharactersRemoteProtocol {
     func fetchCharacters(_ page: Int) async throws -> CharactersDTO {
         let url = Endpoints.characters.rawValue
