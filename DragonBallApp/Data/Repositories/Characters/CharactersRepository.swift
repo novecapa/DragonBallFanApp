@@ -30,6 +30,7 @@ final class CharactersRepository {
 }
 
 // MARK: - CharactersRepositoryProtocol
+
 extension CharactersRepository: CharactersRepositoryProtocol {
     func fetchCharacters(_ page: Int) async throws -> CharactersEntity {
         if page == 1 && !utils.existsConnection {
@@ -65,6 +66,7 @@ extension CharactersRepository: CharactersRepositoryProtocol {
 }
 
 // MARK: - CharactersDTO
+
 fileprivate extension CharactersDTO {
     var toEntity: CharactersEntity {
         CharactersEntity(character: self.items.map { $0.toEntity },
@@ -73,6 +75,7 @@ fileprivate extension CharactersDTO {
 }
 
 // MARK: - ItemDTO
+
 fileprivate extension ItemDTO {
     var toEntity: CharacterEntity {
         CharacterEntity(
@@ -108,6 +111,7 @@ fileprivate extension ItemDTO {
 }
 
 // MARK: - LinksDTO
+
 fileprivate extension LinksDTO {
     var toEntity: LinksEntity {
         LinksEntity(
@@ -120,6 +124,7 @@ fileprivate extension LinksDTO {
 }
 
 // MARK: - OriginPlanetDTO
+
 fileprivate extension OriginPlanetDTO {
     var toEntity: OriginPlanetEntity {
         OriginPlanetEntity(
@@ -143,6 +148,7 @@ fileprivate extension OriginPlanetDTO {
 }
 
 // MARK: - TransformationDTO
+
 fileprivate extension TransformationDTO {
     var toEntity: TransformationEntity {
         TransformationEntity(
@@ -164,6 +170,7 @@ fileprivate extension TransformationDTO {
 }
 
 // MARK: - SDCharacter
+
 fileprivate extension SDCharacter {
     var toEntity: CharacterEntity {
         CharacterEntity(
@@ -183,9 +190,11 @@ fileprivate extension SDCharacter {
 }
 
 // MARK: - SDCharacterFav
+
 fileprivate extension SDCharacterFav {}
 
 // MARK: - SDOriginPlanet
+
 fileprivate extension SDOriginPlanet {
     var toEntity: OriginPlanetEntity {
         OriginPlanetEntity(
@@ -199,6 +208,7 @@ fileprivate extension SDOriginPlanet {
 }
 
 // MARK: - SDOriginPlanet
+
 fileprivate extension SDTransformation {
     var toEntity: TransformationEntity {
         TransformationEntity(
@@ -211,6 +221,7 @@ fileprivate extension SDTransformation {
 }
 
 // MARK: - CharacterEntity
+
 fileprivate extension CharacterEntity {
     var toDatabase: SDCharacter {
         SDCharacter(
@@ -231,6 +242,7 @@ fileprivate extension CharacterEntity {
 }
 
 // MARK: - OriginPlanetEntity
+
 fileprivate extension OriginPlanetEntity {
     var toDatabase: SDOriginPlanet {
         SDOriginPlanet(
@@ -244,6 +256,7 @@ fileprivate extension OriginPlanetEntity {
 }
 
 // MARK: - TransformationEntity
+
 fileprivate extension TransformationEntity {
     var toDatabase: SDTransformation {
         SDTransformation(
