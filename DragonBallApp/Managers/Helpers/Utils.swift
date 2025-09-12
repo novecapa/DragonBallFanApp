@@ -35,6 +35,7 @@ final class Utils: UtilsProtocol {
 }
 
 // MARK: - Reachability
+
 private final class Reachability {
     static func isConnectedToNetwork() -> Bool {
         var zeroAddress = sockaddr_in(sin_len: 0,

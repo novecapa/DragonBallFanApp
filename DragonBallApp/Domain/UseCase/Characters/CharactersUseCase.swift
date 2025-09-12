@@ -17,7 +17,10 @@ protocol CharactersUseCaseProtocol {
 
 final class CharactersUseCase {
 
+    // MARK: - Private
     private let repository: CharactersRepositoryProtocol
+
+    // MARK: - Init
     init(repository: CharactersRepositoryProtocol) {
         self.repository = repository
     }

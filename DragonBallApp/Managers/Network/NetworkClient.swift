@@ -14,7 +14,9 @@ final class NetworkClient {
         self.urlSession = urlSession
     }
 }
+
 // MARK: - NetworkClientProtocol
+
 extension NetworkClient: NetworkClientProtocol {
     func call<T>(urlString: String,
                  method: NetworkMethod,

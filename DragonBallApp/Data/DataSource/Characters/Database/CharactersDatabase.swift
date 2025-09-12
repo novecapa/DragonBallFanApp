@@ -19,9 +19,10 @@ protocol CharactersDatabaseProtocol {
 
 final class CharactersDatabase: CharactersDatabaseProtocol {
 
-    // MARK - Private
+    // MARK: - Private
     private let database: SwiftDataContainerProtocol
 
+    // MARK: - Init
     init(database: SwiftDataContainerProtocol) {
         self.database = database
     }

@@ -17,9 +17,38 @@ final class Log {
         print("\(icon) 🔽 [\(code)] \(url)")
         print("\(data.prettyPrintedJSONString ?? "")")
         print("\(icon) 🔼 [\(code)] \(url)")
+        if let curl = convertToCurl(request: request) {
+            print("----> cURL")
+            print(curl)
+            print("<---- cURL")
+        }
         print("------------------------------------------")
     }
+
+    static func convertToCurl(request: URLRequest?) -> String? {
+        guard let request = request,
+              let url = request.url else { return nil }
+        var curlCommand = "curl"
+        if let httpMethod = request.httpMethod {
+            curlCommand += " -X \(httpMethod)"
+        }
+        if let headers = request.allHTTPHeaderFields {
+            for (key, value) in headers {
+                curlCommand += " -H \"\(key): \(value)\""
+            }
+        }
+        if let httpBody = request.httpBody,
+           let bodyString = String(data: httpBody, encoding: .utf8) {
+            curlCommand += " -d '\(bodyString)'"
+        }
+        curlCommand += " \"\(url.absoluteString)\""
+
+        return curlCommand
+    }
 }
+
+// MARK: - Data
+
 extension Data {
     var prettyPrintedJSONString: String? {
         guard let object = try? JSONSerialization.jsonObject(with: self, options: []),
@@ -28,29 +57,5 @@ extension Data {
               let prettyPrintedString = String(data: data,
                                                encoding: .utf8) else { return nil }
         return prettyPrintedString
-    }
-}
-extension URLRequest {
-    public func curl(pretty: Bool = false) -> String {
-        var data: String = ""
-        let complement = pretty ? "\\\n" : ""
-        let method = "-X \(self.httpMethod ?? "GET") \(complement)"
-        var urlStringPath = ""
-        if let urlString = self.url?.absoluteString {
-            urlStringPath = urlString
-        }
-        let url = "\"" + urlStringPath + "\""
-        var header = ""
-        if let httpHeaders = self.allHTTPHeaderFields, httpHeaders.keys.count > 0 {
-            for (key, value) in httpHeaders {
-                header += "-H \"\(key): \(value)\" \(complement)"
-            }
-        }
-        if let bodyData = self.httpBody,
-           let bodyString = String(data: bodyData, encoding: .utf8) {
-            data = "-d \"\(bodyString)\" \(complement)"
-        }
-        let command = "curl -i " + complement + method + header + data + url
-        return command
     }
 }

@@ -14,8 +14,10 @@ protocol CharactersRemoteProtocol {
 
 final class CharactersRemote {
 
+    // MARK: - Private
     private let networkClient: NetworkClientProtocol
 
+    // MARK: - Init
     init(networkClient: NetworkClientProtocol) {
         self.networkClient = networkClient
     }

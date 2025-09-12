@@ -14,6 +14,7 @@ final class URLSessionMock: URLSessionProtocol {
     }
 
     private let statusCode: Int
+
     init(statusCode: Int) {
         self.statusCode = statusCode
     }

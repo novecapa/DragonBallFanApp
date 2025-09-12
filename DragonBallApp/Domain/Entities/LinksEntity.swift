@@ -11,5 +11,10 @@ struct LinksEntity {
     let next: String
     let last: String
 
-    static let empty: LinksEntity = LinksEntity(first: "", previous: "", next: "", last: "")
+    static let empty: LinksEntity = LinksEntity(
+        first: "",
+        previous: "",
+        next: "",
+        last: ""
+    )
 }
