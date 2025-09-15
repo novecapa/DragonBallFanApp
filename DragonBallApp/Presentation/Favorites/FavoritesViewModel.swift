@@ -17,7 +17,7 @@ final class FavoritesViewModel: ObservableObject {
     }
     @State var rotation: Int = 0
 
-    // MARK - Private
+    // MARK: - Private
     private let useCase: CharactersUseCaseProtocol
 
     init(useCase: CharactersUseCaseProtocol) {
