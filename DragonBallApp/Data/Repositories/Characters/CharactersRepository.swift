@@ -17,9 +17,12 @@ protocol CharactersRepositoryProtocol {
 
 final class CharactersRepository {
 
+    // MARK: Private
     private let utils: UtilsProtocol
     private let remote: CharactersRemoteProtocol
     private let database: CharactersDatabaseProtocol
+
+    // MARK: Init
     init(utils: UtilsProtocol = Utils(),
          remote: CharactersRemoteProtocol,
          database: CharactersDatabaseProtocol) {

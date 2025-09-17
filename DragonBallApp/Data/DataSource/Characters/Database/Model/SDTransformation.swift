@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class SDTransformation {
+final class SDTransformation: Sendable {
     var id: Int
     var name: String
     var image: String

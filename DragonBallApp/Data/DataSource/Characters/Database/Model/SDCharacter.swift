@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class SDCharacter {
+final class SDCharacter: Sendable {
     @Attribute(.unique) var id: Int
     var name: String
     var kii: String
